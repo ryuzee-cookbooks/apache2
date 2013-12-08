@@ -6,7 +6,7 @@ RSpec.configure do |c|
   c.before :all do
     c.os = backend(Serverspec::Commands::Base).check_os
   end
-  c.path = "/sbin:/user/sbin"
+  c.path = "/sbin:/usr/sbin"
 end
 
 os = backend(Serverspec::Commands::Base).check_os
@@ -20,21 +20,15 @@ end
 
 describe package(p) do
   it { should be_installed }
-end
-
-describe service(p) do
-    it { should be_enabled }
-end
-
-describe service(p) do
-    it { should be_running }
+  it { should be_enabled }
+  it { should be_running }
 end
 
 describe port(80) do
-    it { should be_listening }
+  it { should be_listening }
 end
 
 describe file(index) do
-    it { should be_file }
+  it { should be_file }
 end
 
