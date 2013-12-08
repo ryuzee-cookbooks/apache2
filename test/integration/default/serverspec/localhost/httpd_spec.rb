@@ -9,15 +9,24 @@ RSpec.configure do |c|
   c.path = "/sbin:/user/sbin"
 end
 
-describe package('httpd') do
+os = backend(Serverspec::Commands::Base).check_os
+if os[:family] == "Ubuntu" 
+  p = "apache2"
+  index = "/var/www/index.html"
+else
+  p = "httpd"
+  index = "/var/www/html/index.html"
+end
+
+describe package(p) do
   it { should be_installed }
 end
 
-describe service('httpd') do
+describe service(p) do
     it { should be_enabled }
 end
 
-describe service('httpd') do
+describe service(p) do
     it { should be_running }
 end
 
@@ -25,7 +34,7 @@ describe port(80) do
     it { should be_listening }
 end
 
-describe file('/var/www/html/index.html') do
+describe file(index) do
     it { should be_file }
 end
 

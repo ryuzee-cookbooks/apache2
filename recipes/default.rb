@@ -34,7 +34,19 @@ when "centos", "redhat", "amazon", "scientific", "fedora"
   service "httpd" do
     supports :restart => true, :reload => true, :status => true
     action [:enable, :start]
-    not_if do File.exists?("/var/run/httpd.pid") end
+  end
+
+when "ubuntu","debian"
+
+  %w{apache2}.each do |package_name|
+    package package_name do
+      action :install
+    end
+  end
+
+  service "apache2" do
+    supports :restart => true, :reload => true, :status => true
+    action [:enable, :start]
   end
 
 end
