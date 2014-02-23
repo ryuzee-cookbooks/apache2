@@ -10,7 +10,13 @@
 # http://opensource.org/licenses/mit-license.php
 
 if node["platform"] == "centos" and node["platform_version"][0] == "5" 
-  include_recipe "yum::remi"
+  yum_repository 'remi' do
+    description 'Les RPM de Remi - Repository'
+    baseurl 'http://rpms.famillecollet.com/enterprise/5/remi/$basearch/'
+    gpgkey 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi'
+    fastestmirror_enabled true
+    action :create
+  end
 end
 
 case node["platform"]
