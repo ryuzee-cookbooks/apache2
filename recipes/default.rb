@@ -42,6 +42,14 @@ when "centos", "redhat", "amazon", "scientific", "fedora"
     action [:enable, :start]
   end
 
+  directory "/var/www/" do
+    recursive true
+    owner "apache"
+    group "apache"
+    mode 0775
+    action :create
+  end
+
 when "ubuntu","debian"
 
   %w{apache2}.each do |package_name|
